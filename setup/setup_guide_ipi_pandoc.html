@@ -1,0 +1,442 @@
+<h1
+id="setup-guide-fur-die-vorlesung-einfuhrung-in-die-praktische-informatik-ipi">🧑‍💻
+Setup Guide für die Vorlesung <em>Einführung in die Praktische
+Informatik (IPI)</em></h1>
+<blockquote>
+<p>Bei Fragen oder Problemen während des Setups wenden Sie sich bitte an
+den Übungsleiter oder die Übungsleiterin Ihrer Übungsgruppe.</p>
+</blockquote>
+<p>Dieses Setup-Dokument beschreibt die Installation und Einrichtung
+einer <strong>Python-Programmierumgebung</strong> mit <strong>Miniforge
+(Conda)</strong> und <strong>Visual Studio Code (VS Code)</strong>.
+Empfohlen wird die Nutzung eines <strong>Ubuntu-Systems</strong> (oder
+einer anderen gängigen Linux-Distribution) bzw. <strong>macOS</strong>.
+Alternativ kann unter <strong>Windows</strong> das <strong>Windows
+Subsystem for Linux (WSL)</strong> verwendet werden, um eine
+Linux-Umgebung auszuführen.</p>
+<blockquote>
+<p>💡 <strong>Hinweis:</strong> Wir bieten vollständige Unterstützung
+nur für <strong>Ubuntu (bzw. WSL)</strong> / <strong>macOS</strong> und
+<strong>VS Code</strong> an. Wenn Sie ein anderes System oder eine
+andere IDE verwenden möchten, können Sie das tun – allerdings bieten wir
+dann nur eingeschränkten Support.</p>
+</blockquote>
+<hr />
+<h2 id="inhaltsubersicht">📘 Inhaltsübersicht</h2>
+<!-- no toc -->
+<ul>
+<li><a href="#inhaltsubersicht">📘 Inhaltsübersicht</a></li>
+<li><a href="#linux-fur-windows-nutzerinnen-als-subsystem-wsl">🪟 Linux
+für Windows-NutzerInnen als Subsystem (WSL)</a>
+<ul>
+<li><a href="#powershell-7-installieren-erforderlich-fur-wsl">⚙️
+PowerShell 7 installieren (erforderlich für WSL)</a></li>
+<li><a href="#wsl-installieren">🔧 WSL installieren</a></li>
+<li><a href="#ubuntu-einrichten">🧑‍💻 Ubuntu einrichten</a></li>
+</ul></li>
+<li><a href="#visual-studio-code-installieren">💻 Visual Studio Code
+installieren</a>
+<ul>
+<li><a href="#extensions-installieren">🧩 Extensions
+installieren</a></li>
+</ul></li>
+<li><a href="#python-mit-miniforge-conda-installieren">🐍 Python mit
+Miniforge (Conda) installieren</a>
+<ul>
+<li><a href="#miniforge-installieren-linux-macos-wsl">📦 Miniforge
+installieren (Linux/macOS/WSL)</a></li>
+<li><a href="#python-environment-anlegen-und-aktivieren">🧰
+Python-Environment anlegen und aktivieren</a></li>
+<li><a href="#python-pakete-in-der-conda-umgebung-installieren">📚
+Python-Pakete in der Conda-Umgebung installieren</a></li>
+<li><a href="#environment-und-kernel-in-vs-code-auswahlen">🧩
+Environment und Kernel in VS Code auswählen</a>
+<ul>
+<li><a href="#python-interpreter-auswahlen">🐍 Python-Interpreter
+auswählen</a></li>
+<li><a href="#kernel-fur-jupyter-notebooks-auswahlen">📓 Kernel für
+Jupyter Notebooks auswählen</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#deinstallation-und-aufraumen">🧹 Deinstallation und
+Aufräumen</a>
+<ul>
+<li><a href="#conda-umgebungen-entfernen">🧰 Conda-Umgebungen
+entfernen</a></li>
+<li><a href="#miniforge-deinstallieren">📦 Miniforge
+deinstallieren</a></li>
+<li><a href="#visual-studio-code-deinstallieren">💻 Visual Studio Code
+deinstallieren</a></li>
+<li><a href="#wsl-windows-subsystem-for-linux-deinstallieren">🪟 WSL
+(Windows Subsystem for Linux) deinstallieren</a></li>
+<li><a href="#powershell-7-deinstallieren">⚙️ PowerShell 7
+deinstallieren</a></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="linux-fur-windows-nutzerinnen-als-subsystem-wsl">🪟 Linux für
+Windows-NutzerInnen als Subsystem (WSL)</h2>
+<blockquote>
+<p>Dieser Abschnitt gilt <strong>nur für Windows-NutzerInnen</strong>.
+macOS- und Linux-NutzerInnen können direkt mit <a
+href="#visual-studio-code-installieren">Visual Studio Code
+installieren</a> fortfahren.</p>
+</blockquote>
+<h3 id="powershell-7-installieren-erforderlich-fur-wsl">⚙️ PowerShell 7
+installieren (erforderlich für WSL)</h3>
+<ol type="1">
+<li><p>Öffnen Sie die <strong>Windows PowerShell</strong> (Windows-Taste
+drücken → „Windows PowerShell“ suchen → anklicken). &gt; 💡 Diese
+Version ist standardmäßig vorinstalliert (Version 5.x) und wird nur
+verwendet, um PowerShell 7 zu installieren.</p></li>
+<li><p>Geben Sie nacheinander folgende Befehle ein:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>winget search Microsoft<span class="op">.</span><span class="fu">PowerShell</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>winget install <span class="op">--</span>id Microsoft<span class="op">.</span><span class="fu">PowerShell</span> <span class="op">--</span>source winget</span></code></pre></div></li>
+<li><p>Nach der Installation finden Sie die neue Version im Startmenü
+als „PowerShell“ (dunkles Symbol, ggf. mit der Versionsnummer 7). Sie
+kann alternativ auch über den Befehl <code>pwsh</code> gestartet
+werden.</p></li>
+</ol>
+<h3 id="wsl-installieren">🔧 WSL installieren</h3>
+<ol type="1">
+<li><p>Öffnen Sie die <strong>PowerShell</strong> 7 (Windows-Taste →
+„PowerShell“ suchen → Rechtsklick → <em>Als Administrator
+ausführen</em>).</p></li>
+<li><p>Geben Sie folgenden Befehl ein:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install</span></code></pre></div></li>
+<li><p>Starten Sie den Computer anschließend neu.</p></li>
+</ol>
+<blockquote>
+<p>ℹ️ Falls Probleme auftreten, folgen Sie bitte der offiziellen
+Microsoft-Anleitung: <a
+href="https://learn.microsoft.com/de-de/windows/wsl/install">https://learn.microsoft.com/de-de/windows/wsl/install</a></p>
+</blockquote>
+<h3 id="ubuntu-einrichten">🧑‍💻 Ubuntu einrichten</h3>
+<ol type="1">
+<li>Nach dem Neustart öffnet sich ein Terminalfenster mit der
+Ubuntu-Installation. Falls sich Ubuntu nicht automatisch öffnet, müssen
+Sie es manuell starten (Windows Taste → „Ubuntu“ suchen →
+anklicken).</li>
+<li>Sie werden aufgefordert, einen <strong>Benutzernamen</strong> und
+ein <strong>Passwort</strong> zu erstellen – merken Sie sich beides.
+(Bitte beachten Sie, dass Sie beim Eingeben des Kennworts auf dem
+Bildschirm nichts sehen werden. Dies wird als blinde Eingabe bezeichnet
+und ist völlig normal.)</li>
+<li>Nach Abschluss können Sie Ubuntu/WSL-Terminal jederzeit über das
+Startmenü (Suche nach „Ubuntu“) öffnen.</li>
+</ol>
+<p>Damit ist Ihr Linux-Subsystem eingerichtet.</p>
+<hr />
+<h2 id="visual-studio-code-installieren">💻 Visual Studio Code
+installieren</h2>
+<ol type="1">
+<li>Besuchen Sie die offizielle Downloadseite: 👉 <a
+href="https://code.visualstudio.com/Download">https://code.visualstudio.com/Download</a></li>
+<li>Laden Sie die passende Version herunter:
+<ul>
+<li><strong>Windows-NutzerInnen:</strong> „Windows Installer“
+(<code>.exe</code>) auswählen (auch wenn Sie WSL nutzen).</li>
+<li><strong>macOS-NutzerInnen:</strong> <code>.zip</code>-Datei für
+macOS.</li>
+<li><strong>Linux-NutzerInnen:</strong> <code>.deb</code>-Datei (für
+Ubuntu/Debian) oder <code>.rpm</code> (für Fedora).</li>
+</ul></li>
+<li>Führen Sie die Installation aus. Für weitere Informationen dazu:
+<ul>
+<li><strong>Windows-NutzerInnen:</strong> siehe <a
+href="https://code.visualstudio.com/docs/setup/windows#_install-vs-code-on-windows">hier</a>,</li>
+<li><strong>macOS-NutzerInnen:</strong> siehe <a
+href="https://code.visualstudio.com/docs/setup/mac#_install-vs-code-on-macos">hier</a>,</li>
+<li><strong>Linux-NutzerInnen:</strong> siehe <a
+href="https://code.visualstudio.com/docs/setup/linux#_install-vs-code-on-linux">hier</a>.</li>
+</ul></li>
+<li>Starten Sie <strong>VS Code</strong>.</li>
+<li><strong>Hinweis für Windows/WSL:</strong> Links unten auf das blau
+hinterlegte <code>&gt;&lt;</code>-Zeichen drücken, dann WSL
+auswählen.</li>
+<li><strong>Spracheinstellung:</strong> Bitte stellen Sie sicher, dass
+<strong>VS Code auf Englisch</strong> eingestellt ist. Dadurch stimmen
+alle folgenden Anweisungen mit der Benutzeroberfläche überein und
+Fehlermeldungen lassen sich online leichter recherchieren.
+<ul>
+<li>Öffnen Sie die <strong>Command Palette</strong>
+(<code>Ctrl + Shift + P</code> bzw. <code>⌘ + Shift + P</code> auf
+macOS).</li>
+<li>Geben Sie <strong>„Configure Display Language“</strong> ein (dieser
+Befehl funktioniert in jeder Sprache).</li>
+<li>Wählen Sie <strong>English (en)</strong> und starten Sie VS Code
+neu. &gt; 💡 Falls VS Code nach der Installation automatisch eine
+Erweiterung namens <em>Language Pack for Visual Studio Code</em>
+installiert hat, können Sie diese über die
+<strong>Extensions-Ansicht</strong> (linke Seitenleiste → Symbol mit
+vier Quadraten oder <code>Ctrl + Shift + X</code> /
+<code>⌘ + Shift + X</code>) wieder deaktivieren oder entfernen.</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="extensions-installieren">🧩 Extensions installieren</h3>
+<ol type="1">
+<li>Öffnen Sie in VS Code die <strong>Extensions-Ansicht</strong> (linke
+Seitenleiste → Symbol mit vier Quadraten oder
+<code>Ctrl + Shift + X</code>/<code>⌘ + Shift + X</code>).</li>
+<li>Suchen und installieren Sie folgende Erweiterungen:
+<ul>
+<li><code>Python</code> (Microsoft)</li>
+<li><code>Jupyter</code> (Microsoft)</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="python-mit-miniforge-conda-installieren">🐍 Python mit Miniforge
+(Conda) installieren</h2>
+<p>Wir nutzen <a
+href="https://github.com/conda-forge/miniforge">Miniforge</a>, eine
+schlanke, offene Conda-Distribution, um Python-Umgebungen effizient zu
+verwalten.</p>
+<h3 id="miniforge-installieren-linux-macos-wsl">📦 Miniforge
+installieren (Linux/macOS/WSL)</h3>
+<ol type="1">
+<li><p>Öffnen Sie Ihr Terminal (<strong>Linux</strong>,
+<strong>macOS</strong> oder <strong>WSL</strong>).</p></li>
+<li><p><strong>Nur Linux und WSL</strong>: Aktualisieren Sie Ihre
+Systempakete, bevor Sie Miniforge installieren. Das stellt sicher, dass
+alle benötigten Werkzeuge auf dem neuesten Stand sind.</p>
+<ul>
+<li><p><strong>Unter Ubuntu oder WSL:</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span></code></pre></div></li>
+<li><p>Unter anderen Linux-Distributionen verwenden Sie die
+entsprechenden Befehle Ihres Paketmanagers.</p></li>
+</ul></li>
+<li><p>Laden Sie das passende Installationsskript. (<em>Hinweis</em>: In
+den folgenden Befehlen sind <code>$(uname)</code> und
+<code>$(uname -m)</code> Variablen, die von der Shell bzw. vom Terminal
+automatisch eingefügt werden. Sie müssen im Folgenden nichts an den
+Befehlen anpassen.) Unter <strong>Linux</strong> und
+<strong>WSL</strong>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="st">&quot;https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="va">$(</span><span class="fu">uname</span><span class="va">)</span><span class="st">-</span><span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span><span class="st">.sh&quot;</span></span></code></pre></div>
+<p>Unter <strong>macOS</strong>:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-O</span> <span class="st">&quot;https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-</span><span class="va">$(</span><span class="fu">uname</span><span class="va">)</span><span class="st">-</span><span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span><span class="st">.sh&quot;</span></span></code></pre></div></li>
+<li><p>Führen Sie das Skript aus:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Miniforge3-<span class="va">$(</span><span class="fu">uname</span><span class="va">)</span>-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span>.sh</span></code></pre></div></li>
+<li><p>Folgen Sie den Anweisungen im Installer (Lizenz bestätigen,
+Standardpfad übernehmen, usw.). Der Ablauf der Installation kann je nach
+Version des Installationsskript leicht variieren, sollte aber in etwa
+wie folgt aussehen:</p>
+<ol type="1">
+<li>Mit <strong>ENTER</strong> den Installationsvorgang starten.<br />
+</li>
+<li>Mit <strong><code>q</code></strong> die Anzeige der
+Lizenzbedingungen beenden.<br />
+</li>
+<li>Mit <strong><code>yes</code></strong> die Lizenzbedingungen
+akzeptieren.<br />
+</li>
+<li>Mit <strong>ENTER</strong> den vorgeschlagenen
+Standardinstallationsort bestätigen.<br />
+</li>
+<li>Mit <strong><code>yes</code></strong> bestätigen, dass das
+Shell-Profil aktualisiert wird, sodass der <code>conda</code>-Befehl
+automatisch verfügbar ist.<br />
+</li>
+<li>Warten Sie, bis die Installation abgeschlossen ist — am Ende sollte
+eine entsprechende Erfolgsmeldung erscheinen.</li>
+</ol></li>
+<li><p>Nach der Installation Terminal schließen und neu öffnen, erst
+dann kann der <code>conda</code>-Befehl genutzt werden.</p></li>
+<li><p>Prüfen Sie, ob <code>conda</code> aktiv ist:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> <span class="at">--version</span></span></code></pre></div>
+<p>Falls nicht, führen Sie Folgendes aus:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> init bash</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span> bash</span></code></pre></div></li>
+<li><p>Deaktivieren Sie die automatische Aktivierung des
+Basis-Environments. Standardmäßig startet Conda jedes neue Terminal im
+sogenannten <code>base</code>-Environment. Für eine saubere
+Arbeitsumgebung (und um Verwechslungen mit dem Kurs-Environment zu
+vermeiden) empfiehlt es sich, diese automatische Aktivierung
+auszuschalten. Dazu können Sie einmalig den folgenden Befehl
+ausführen:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> config <span class="at">--set</span> auto_activate_base false</span></code></pre></div>
+<p>Diese Einstellung betrifft nur neue Terminals und wird erst nach
+einem Neustart des Terminals wirksam.</p></li>
+</ol>
+<hr />
+<h3 id="python-environment-anlegen-und-aktivieren">🧰 Python-Environment
+anlegen und aktivieren</h3>
+<p>Mit Conda können Sie getrennte Umgebungen für verschiedene Projekte
+anlegen. Für diese Anleitung nennen wir das Environment
+<strong><code>IPI</code></strong>, der Name ist aber <strong>frei
+wählbar</strong>.</p>
+<ol type="1">
+<li><p>Neues Environment mit Python 3.13 anlegen (mit <code>y</code>
+bestätigen):</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> IPI python=3.13</span></code></pre></div></li>
+<li><p>Environment aktivieren:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate IPI</span></code></pre></div></li>
+<li><p>Überprüfen, ob alles funktioniert:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> python</span></code></pre></div>
+<p>Wenn alles korrekt eingerichtet ist, sollte die Ausgabe in etwa wie
+folgt aussehen:</p>
+<ul>
+<li><p>Bei <code>python --version</code> erscheint eine Zeile wie:</p>
+<pre><code>Python 3.13.x</code></pre></li>
+<li><p>Bei <code>which python</code> sollte ein Pfad angezeigt werden,
+der sich innerhalb des Miniforge-Installationsverzeichnisses befindet
+und den Namen Ihres Conda-Environments enthält, z. B.:</p>
+<pre><code>/home/&lt;username&gt;/miniforge3/envs/IPI/bin/python</code></pre></li>
+</ul></li>
+<li><p>Solange dieses Terminal geöffnet ist, bleibt das Environment
+aktiv (erkennbar am Präfix <code>IPI</code> in der Eingabezeile). Sie
+können es jederzeit wieder deaktivieren mit:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> deactivate</span></code></pre></div>
+<p>Wenn Sie das Terminal schließen, wird das Environment ebenfalls
+automatisch deaktiviert. Beim nächsten Öffnen müssen Sie das Environment
+bei Bedarf erneut mit <code>conda activate IPI</code>
+aktivieren.</p></li>
+</ol>
+<blockquote>
+<p>💡 Python entwickelt sich seit vielen Jahren kontinuierlich weiter.
+Zwischen den Versionen der Reihe <strong>Python 3.x</strong> gibt es nur
+kleinere Änderungen und Verbesserungen, die Sprache und ihre
+Grundprinzipien bleiben gleich. Für diese Vorlesung verwenden wir
+<strong>Python 3.13</strong>, damit alle dieselbe aktuelle Version mit
+identischen Funktionen nutzen.</p>
+</blockquote>
+<hr />
+<h3 id="python-pakete-in-der-conda-umgebung-installieren">📚
+Python-Pakete in der Conda-Umgebung installieren</h3>
+<p>Innerhalb einer Conda-Umgebung kann auch der Python-eigene
+Paketmanager <code>pip</code> verwendet werden. Das funktioniert, weil
+jede Conda-Umgebung ihr eigenes Python und damit auch ein eigenes
+<code>pip</code> enthält. Pakete, die Sie über <code>pip</code>
+installieren, werden also nur in dieser Umgebung installiert – nicht
+systemweit.</p>
+<p>Um beispielsweise Jupyter-Notebooks in <strong>VS Code</strong>
+nutzen zu können, installieren Sie die benötigten Pakete mit dem
+folgenden Befehl:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install jupyter ipykernel</span></code></pre></div>
+<hr />
+<h3 id="environment-und-kernel-in-vs-code-auswahlen">🧩 Environment und
+Kernel in VS Code auswählen</h3>
+<p>Um sicherzustellen, dass VS Code Ihr Conda-Environment für
+Python-Dateien und Jupyter Notebooks verwendet, müssen Sie einmalig den
+Interpreter bzw. Kernel auswählen.</p>
+<h4 id="python-interpreter-auswahlen">🐍 Python-Interpreter
+auswählen</h4>
+<ol type="1">
+<li>Öffnen Sie <strong>VS Code</strong>.</li>
+<li>Öffnen Sie die <strong>Command Palette</strong>
+<ul>
+<li><strong>Windows / Linux:</strong> <code>Ctrl + Shift + P</code></li>
+<li><strong>macOS:</strong> <code>⌘ + Shift + P</code></li>
+</ul></li>
+<li>Geben Sie „Python: Select Interpreter“ ein und drücken Sie
+<strong>Enter</strong>.</li>
+<li>Wählen Sie das Environment <code>IPI</code> (oder den von Ihnen
+gewählten Namen) aus. VS Code verwendet nun automatisch dieses
+Conda-Environment für alle Python-Dateien.</li>
+</ol>
+<h4 id="kernel-fur-jupyter-notebooks-auswahlen">📓 Kernel für Jupyter
+Notebooks auswählen</h4>
+<ol type="1">
+<li>Öffnen Sie ein Jupyter Notebook (<code>.ipynb</code>) in VS
+Code.</li>
+<li>Klicken Sie oben rechts auf <strong>„Select Kernel“</strong>.</li>
+<li>Wählen Sie <strong>„Python Environments…“</strong> und dann das
+Conda-Environment <code>IPI</code> (oder den von Ihnen gewählten Namen).
+Danach werden alle Notebook-Zellen in dieser Umgebung ausgeführt.</li>
+</ol>
+<blockquote>
+<p>💡 Der ausgewählte Kernel bzw. Interpreter bestimmt, in welcher
+Python-Umgebung Ihr Code ausgeführt wird. Wenn Sie später ein anderes
+Environment verwenden möchten, können Sie den Interpreter oder Kernel
+jederzeit erneut über den selben Weg ändern.</p>
+</blockquote>
+<hr />
+<h2 id="deinstallation-und-aufraumen">🧹 Deinstallation und
+Aufräumen</h2>
+<p>Wenn Sie Ihre Entwicklungsumgebung zurücksetzen oder vollständig
+entfernen möchten, können Sie die folgenden Schritte ausführen.</p>
+<hr />
+<h3 id="conda-umgebungen-entfernen">🧰 Conda-Umgebungen entfernen</h3>
+<ul>
+<li><p><strong>Ein bestimmtes Environment (hier <code>IPI</code>)
+löschen:</strong></p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> remove <span class="at">-n</span> IPI <span class="at">--all</span></span></code></pre></div></li>
+<li><p><strong>Alle vorhandenen Environments anzeigen:</strong></p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env list</span></code></pre></div></li>
+</ul>
+<blockquote>
+<p>⚠️ Sie können alle Environments löschen, <strong>außer das
+<code>base</code>-Environment</strong>. Das
+<code>base</code>-Environment gehört zur Conda-Installation selbst und
+darf <strong>nicht entfernt</strong> werden.</p>
+</blockquote>
+<hr />
+<h3 id="miniforge-deinstallieren">📦 Miniforge deinstallieren</h3>
+<p>Befolgen Sie die offiziellen Deinstallationsanweisungen von
+Miniforge: 🔗 <a
+href="https://github.com/conda-forge/miniforge?tab=readme-ov-file#uninstall">Miniforge
+deinstallieren</a></p>
+<hr />
+<h3 id="visual-studio-code-deinstallieren">💻 Visual Studio Code
+deinstallieren</h3>
+<p>Befolgen Sie die offiziellen Deinstallationsanweisungen von VS Code:
+🔗 <a href="https://code.visualstudio.com/docs/setup/uninstall">VS Code
+deinstallieren</a></p>
+<hr />
+<h3 id="wsl-windows-subsystem-for-linux-deinstallieren">🪟 WSL (Windows
+Subsystem for Linux) deinstallieren</h3>
+<p>Wenn Sie WSL nicht mehr benötigen, können Sie es folgendermaßen
+entfernen:</p>
+<ol type="1">
+<li><p><strong>Alle Linux-Distributionen auflisten:</strong></p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>list</span></code></pre></div></li>
+<li><p><strong>Eine bestimmte Distribution (z. B. Ubuntu)
+deinstallieren:</strong></p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>unregister Ubuntu</span></code></pre></div></li>
+<li><p><strong>WSL komplett entfernen (optional):</strong></p>
+<ul>
+<li><p>Öffnen Sie „Apps &amp; Features“ → suchen Sie nach
+<strong>Windows Subsystem for Linux</strong> → deinstallieren.</p></li>
+<li><p>Alternativ über PowerShell:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dism<span class="op">.</span><span class="fu">exe</span> <span class="op">/</span>online <span class="op">/</span>disable-feature <span class="op">/</span>featurename<span class="op">:</span>Microsoft-Windows-Subsystem-Linux</span></code></pre></div></li>
+</ul></li>
+</ol>
+<blockquote>
+<p>⚠️ Durch das Unregistern einer Distribution werden alle darin
+gespeicherten Daten gelöscht.</p>
+</blockquote>
+<hr />
+<h3 id="powershell-7-deinstallieren">⚙️ PowerShell 7 deinstallieren</h3>
+<p>Wenn Sie PowerShell 7 nicht mehr benötigen, können Sie sie über die
+Windows-Einstellungen oder per <code>winget</code> entfernen.</p>
+<blockquote>
+<p>💡 Führen Sie den folgenden Befehl in der <strong>Windows PowerShell
+(Version 5)</strong> aus, da PowerShell 7 sich nicht selbst
+deinstallieren kann.</p>
+</blockquote>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>winget uninstall <span class="op">--</span>id Microsoft<span class="op">.</span><span class="fu">PowerShell</span> <span class="op">--</span>source winget</span></code></pre></div>
+<p>Anschließend bleibt die vorinstallierte <strong>Windows PowerShell
+5</strong> weiterhin auf Ihrem System verfügbar.</p>
