@@ -1,0 +1,37 @@
+<p>Zusätzlich zu den bisherigen Abgaberegeln (diese finden Sie auch <a
+href="https://moodle.uni-heidelberg.de/mod/page/view.php?id=1433657"><span
+style="color: red">hier</span></a>), gelten ab diesem Übungsblatt
+folgende Regeln:</p>
+<ol>
+<li><p><strong>Syntax-Fehler</strong></p>
+<p>Ab diesem Übungsblatt werden Python-Skripte, die aufgrund eines
+Syntax-Fehlers nicht ausführbar sind, mit 0 Punkten bewertet.
+Syntax-Fehler treten auf, wenn Ihr Programm nicht den Regeln der
+Python-Syntax entspricht. Ein Beispiel für einen Syntax-Fehler ist das
+Vergessen eines Doppelpunkts am Ende einer Funktionsdefinition:</p>
+<pre><code>    # Am Ende der Zeile fehlt ein&#39;:&#39;
+    def add_one(x: int) -&gt; int
+        return x + 1   </code></pre>
+<p>Wenn Sie versuchen, dieses Programm auszuführen, erhalten Sie die
+folgende Fehlermeldung:</p>
+<pre><code>    File &quot;foo.py&quot;, line 2
+    def add_one(x: int) -&gt; int
+                              ^
+    SyntaxError: expected&#39;:&#39;    </code></pre>
+<p>Dabei zeigt die Fehlermeldung sowohl die fehlerhafte Zeile als auch
+eine kurze Fehlerbeschreibung an. In diesem Fall wird in Zeile 2 an der
+angezeigten Stelle ein Doppelpunkt erwartet.</p>
+<p>Syntax-Fehler sind oft leicht zu finden und zu beheben, insbesondere
+wenn Sie VS Code nutzen. Wenn Sie einen Syntax-Fehler nach längerem
+Überprüfen Ihres Codes dennoch nicht lösen können, wenden Sie sich bitte
+rechtzeitig an Ihre Tutorin oder fragen Sie im Forum, ohne dabei
+(Teil)Lösungen zu posten.</p></li>
+<li><p><strong>Typannotationen</strong></p>
+<p>Zusätzlich sollen Sie ab diesem Übungsblatt Typannotationen in Ihren
+Funktionen verwenden. Geben sie dabei den Typen so präzise wie möglich
+an. Gibt eine Funktion zum Beispiel eine Liste von ganzen Zahlen zurück,
+so sollte der Rückgabetyp <code>list[int]</code> sein.</p>
+<p>In der Vorlesung am 6.11.2025 haben wir über Typannotationen
+gesprochen und auch gesehen, wie diese bei der Spezifikation von
+benutzerdefinierten Funktionen verwendet werden.</p></li>
+</ol>
