@@ -7,6 +7,7 @@ def hex_to_dec(hex: str) -> int:
     Returns:
         int: The decimal equivalent of the hexadecimal number.
     """
+    hex = hex.upper()
     decimal = 0
     hex_digits = "0123456789ABCDEF"
     for index, char in enumerate(reversed(hex)):
