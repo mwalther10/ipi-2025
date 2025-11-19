@@ -1,3 +1,6 @@
+import math
+
+
 def approx_pi(n_terms: int) -> float:
     """Approximate the value of π using the Leibniz formula.
 
@@ -19,3 +22,10 @@ def approx_pi(n_terms: int) -> float:
         pi_approximation += term
     pi_approximation *= 4
     return pi_approximation
+
+assert math.isclose ( approx_pi (0) , 4)
+assert math.isclose ( approx_pi (1) , 2.666666666666667)
+assert math.isclose ( approx_pi (2) , 3.466666666666667)
+assert math.isclose ( approx_pi (78) , 3.1542503744801236)
+assert math.isclose ( approx_pi (1000) , 3.1425916543395442)
+assert math.isclose ( approx_pi (10000) , 3.1416926435905346) 
