@@ -34,7 +34,7 @@ assert mixable(recipes, ["Rum", "Whiskey", "Limette", "Zucker", "Coke", "Zitrone
     "Whiskey Sour",
     "Cuba Libre",
 ]
-mixable(recipes, ["Rum", "Vodka", "Limette", "Zucker", "Ginger ale"]) == [
+assert mixable(recipes, ["Rum", "Vodka", "Limette", "Zucker", "Ginger ale"]) == [
     "Daiquiri",
     "Moscow Mule",
 ]

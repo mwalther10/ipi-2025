@@ -15,23 +15,35 @@ def hex_to_dec(hex: str) -> int:
         decimal += value * (16**index)
     return decimal
 
-
-# Version ohne enumerate und reversed
-#    decimal = 0
-#    hex_digits = '0123456789ABCDEF'
-#    length = len(hex)
-#    for i in range(length):
-#        char = hex[length - 1 - i]
-#        value = hex_digits.index(char)
-#        decimal += value * (16 ** i)
-#    return decimal
-
 assert hex_to_dec("0") == 0
 assert hex_to_dec("17") == 23
 assert hex_to_dec("FF") == 255
 assert hex_to_dec("00FF") == 255
 assert hex_to_dec("3AF2") == 15090
 
+def hex_to_dec_1(hex:str) -> int:
+   """Convert a hexadecimal number to its decimal equivalent.
+
+   Args:
+       hex (str): A string representing a hexadecimal number (e.g., 'FF').
+
+   Returns:
+       int: The decimal equivalent of the hexadecimal number.
+   """
+   decimal = 0
+   hex_digits = '0123456789ABCDEF'
+   length = len(hex)
+   for i in range(length):
+       char = hex[length - 1 - i]
+       value = hex_digits.index(char)
+       decimal += value * (16 ** i)
+   return decimal
+
+assert hex_to_dec_1("0") == 0
+assert hex_to_dec_1("17") == 23
+assert hex_to_dec_1("FF") == 255
+assert hex_to_dec_1("00FF") == 255
+assert hex_to_dec_1("3AF2") == 15090
 
 def hex_to_dec_2(hex: str) -> int:
     """Convert a hexadecimal number to its decimal equivalent.
