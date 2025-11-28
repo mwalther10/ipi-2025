@@ -17,6 +17,15 @@ assert all([]) is True
 assert all([True, True, True]) is True
 assert all([True, False, True, False]) is False
 
+
+def all2(lst: list[bool]) -> bool:
+    return False not in lst
+
+
+assert all2([]) is True
+assert all2([True, True, True]) is True
+assert all2([True, False, True, False]) is False
+
 """
 Punktevergabe:
 - 2 Punkte für korrekte Implementierung und Typannotationen
