@@ -1,6 +1,16 @@
 from snake import (
-    Vec2D, add_vecs, Item, Snake, Game, turn_direction, turn_snake,
-    grow_positions, move_snake, collision, generate_item, pick_item
+    Vec2D,
+    add_vecs,
+    Item,
+    Snake,
+    Game,
+    turn_direction,
+    turn_snake,
+    grow_positions,
+    move_snake,
+    collision,
+    generate_item,
+    pick_item,
 )
 
 
@@ -32,8 +42,13 @@ def test_Snake():
 
 
 def test_Game():
-    g = Game(Snake([Vec2D(3, 0), Vec2D(2, 0)], Vec2D(1, 0), True, 2),
-             16, 14, 0, [Item(Vec2D(7, 2), 3)])
+    g = Game(
+        Snake([Vec2D(3, 0), Vec2D(2, 0)], Vec2D(1, 0), True, 2),
+        16,
+        14,
+        0,
+        [Item(Vec2D(7, 2), 3)],
+    )
     assert g.snake == Snake([Vec2D(3, 0), Vec2D(2, 0)], Vec2D(1, 0), True, 2)
     assert g.width == 16
     assert g.height == 14
@@ -103,8 +118,12 @@ def test_collide():
     s1 = Snake([Vec2D(9, 9)], Vec2D(1, 0), True, 0)
     assert not collision(s1, 10, 10)
     assert collision(s1, 10, 9)
-    s2 = Snake([Vec2D(4, 4), Vec2D(4, 3), Vec2D(3, 3), Vec2D(3, 4), Vec2D(4, 4)],
-               Vec2D(0, 1), True, 0)
+    s2 = Snake(
+        [Vec2D(4, 4), Vec2D(4, 3), Vec2D(3, 3), Vec2D(3, 4), Vec2D(4, 4)],
+        Vec2D(0, 1),
+        True,
+        0,
+    )
     assert collision(s2, 10, 10)
     s3 = Snake([Vec2D(-1, 3)], Vec2D(1, 0), True, 3)
     assert collision(s3, 10, 10)
@@ -128,7 +147,7 @@ def test_pick_item():
     assert its2 is not its3
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_Vec2D()
     test_add_vecs()
     test_Item()

@@ -2,7 +2,14 @@ import pygame
 
 from typing import Optional
 from snake import (
-    Game, Snake, Vec2D, turn_snake, move_snake, collision, generate_item, pick_item
+    Game,
+    Snake,
+    Vec2D,
+    turn_snake,
+    move_snake,
+    collision,
+    generate_item,
+    pick_item,
 )
 
 
@@ -11,6 +18,7 @@ def hsl_to_rgb(hue: float, saturation: float, lightness: float) -> tuple[int, in
     if saturation == 0:
         r = g = b = lightness * 255  # Achromatic case (gray)
     else:
+
         def hue_to_rgb(p, q, t):
             t = t % 1  # Ensure t stays within [0, 1]
             if t < 1 / 6:
@@ -56,7 +64,10 @@ def update(game: Game, snake_input: int, SPEED: int, SPAWN_RATE: int) -> Game:
 
     return Game(
         Snake(snake.positions, snake.direction, alive, snake.grow + energy),
-        game.width, game.height, game.frame + 1, items
+        game.width,
+        game.height,
+        game.frame + 1,
+        items,
     )
 
 
@@ -67,36 +78,51 @@ def draw(screen: pygame.Surface, game: Game):
     for x in range(game.width):
         for y in range(game.height):
             if x % 2 != y % 2:
-                pygame.draw.rect(screen, (0, 40, 0),
-                                 (x * tile_width, y * tile_height,
-                                  tile_width, tile_height))
+                pygame.draw.rect(
+                    screen,
+                    (0, 40, 0),
+                    (x * tile_width, y * tile_height, tile_width, tile_height),
+                )
 
     h = 0 if game.snake.alive else (pygame.time.get_ticks() // 1.3)
     i = 0
     for pos in game.snake.positions:
         color = hsl_to_rgb(h + i * 7, 1, 0.5)
-        pygame.draw.rect(screen, color,
-                         (pos.x * tile_width, pos.y * tile_height,
-                          tile_width, tile_height))
+        pygame.draw.rect(
+            screen,
+            color,
+            (pos.x * tile_width, pos.y * tile_height, tile_width, tile_height),
+        )
         i += 1
         color = hsl_to_rgb(h + i * 7, 1, 0.5)
-        pygame.draw.rect(screen, color,
-                         (pos.x * tile_width, pos.y * tile_height,
-                          tile_width, tile_height), 4)
+        pygame.draw.rect(
+            screen,
+            color,
+            (pos.x * tile_width, pos.y * tile_height, tile_width, tile_height),
+            4,
+        )
 
     for item in game.items:
         pos = item.position
-        pygame.draw.circle(screen, hsl_to_rgb(0 + 10 * item.energy, 1, 0.5),
-                           ((pos.x + 0.5) * tile_width, (pos.y + 0.5) * tile_height),
-                           (tile_width / 2.5))
+        pygame.draw.circle(
+            screen,
+            hsl_to_rgb(0 + 10 * item.energy, 1, 0.5),
+            ((pos.x + 0.5) * tile_width, (pos.y + 0.5) * tile_height),
+            (tile_width / 2.5),
+        )
 
 
-def main(game: Optional[Game], resolution: tuple[int, int], fps: int,
-         SPEED: int, SPAWN_RATE: float):
+def main(
+    game: Optional[Game],
+    resolution: tuple[int, int],
+    fps: int,
+    SPEED: int,
+    SPAWN_RATE: float,
+):
     pygame.display.init()
     pygame.display.set_caption("Snake")
     pygame.font.init()
-    font = pygame.font.SysFont('', 40)
+    font = pygame.font.SysFont("", 40)
     fpsClock = pygame.time.Clock()
 
     screen = pygame.display.set_mode((resolution[0], resolution[1] + 40))
@@ -121,7 +147,9 @@ def main(game: Optional[Game], resolution: tuple[int, int], fps: int,
 
         if game:
             if game.snake.alive:
-                game = update(game, snake_input, int(fps / SPEED), int(SPAWN_RATE * fps))
+                game = update(
+                    game, snake_input, int(fps / SPEED), int(SPAWN_RATE * fps)
+                )
 
             elif snake_input == 42:
                 game = Game(Snake([Vec2D(1, 1)], Vec2D(1, 0), True, 5), 40, 40, 0, [])
@@ -130,15 +158,25 @@ def main(game: Optional[Game], resolution: tuple[int, int], fps: int,
             pygame.draw.rect(screen, (0, 0, 0), (0, resolution[1], resolution[0], 40))
             score = font.render(
                 f"time: {game.frame // fps}s - score: {len(game.snake.positions)}"
-                f"- speed: {SPEED} - spawn rate: {SPAWN_RATE}s", True, (255, 54, 54))
+                f"- speed: {SPEED} - spawn rate: {SPAWN_RATE}s",
+                True,
+                (255, 54, 54),
+            )
             # center text
-            screen.blit(score, ((resolution[0] / 2) - score.get_rect().width / 2, resolution[1] + 6))
+            screen.blit(
+                score,
+                ((resolution[0] / 2) - score.get_rect().width / 2, resolution[1] + 6),
+            )
 
             if not game.snake.alive:
-                game_over = font.render('— GAME OVER —', True, (255, 54, 54))
+                game_over = font.render("— GAME OVER —", True, (255, 54, 54))
                 restart = font.render("Press SPACE to restart!", True, (255, 54, 54))
-                c_game_over = game_over.get_rect(center=(resolution[0] / 2, resolution[1] / 2))
-                c_restart = restart.get_rect(center=(resolution[0] / 2, resolution[1] / 2 + resolution[1] // 10))
+                c_game_over = game_over.get_rect(
+                    center=(resolution[0] / 2, resolution[1] / 2)
+                )
+                c_restart = restart.get_rect(
+                    center=(resolution[0] / 2, resolution[1] / 2 + resolution[1] // 10)
+                )
                 screen.blit(game_over, c_game_over)
 
                 if pygame.time.get_ticks() % 1000 > 500:
@@ -149,23 +187,23 @@ def main(game: Optional[Game], resolution: tuple[int, int], fps: int,
 
 
 def new_game() -> Optional[Game]:
-    return (Game(
-        Snake([Vec2D(1, 1)], Vec2D(1, 0), True, 5),
-        40, 40, 0, []
-    ) if 'Game' in dir() else None
+    return (
+        Game(Snake([Vec2D(1, 1)], Vec2D(1, 0), True, 5), 40, 40, 0, [])
+        if "Game" in dir()
+        else None
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # ---------------- Settings you can change ---------------- #
-    SPEED = 10      # speed of the snake in tiles per second
+    SPEED = 10  # speed of the snake in tiles per second
     SPAWN_RATE = 4  # spawn rate of items (every X seconds)
     # --------------------------------------------------------- #
 
-    game = (Game(
-        Snake([Vec2D(1, 1)], Vec2D(1, 0), True, 5),
-        40, 40, 0, []
-    ) if 'Game' in dir() else None
+    game = (
+        Game(Snake([Vec2D(1, 1)], Vec2D(1, 0), True, 5), 40, 40, 0, [])
+        if "Game" in dir()
+        else None
     )
     main(game, resolution=(680, 680), fps=60, SPEED=SPEED, SPAWN_RATE=SPAWN_RATE)
