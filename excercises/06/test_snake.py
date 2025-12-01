@@ -160,3 +160,4 @@ if __name__ == "__main__":
     test_collide()
     test_generate_item()
     test_pick_item()
+    print("All tests passed.")
