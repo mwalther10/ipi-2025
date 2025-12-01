@@ -52,6 +52,7 @@ def wordle() -> None:
             break
         else:
             print(result)
+            
 
-
-wordle()
+if __name__ == "__main__":
+    wordle()
